@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,7 +23,6 @@ import kotlinx.coroutines.launch
 fun SwitchThemeItem(modifier: Modifier = Modifier) {
     val dataStore = StoreTheme(LocalContext.current)
     val scope = rememberCoroutineScope()
-    val theme = remember { mutableStateOf(Theme.Light.name) }
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -38,16 +35,9 @@ fun SwitchThemeItem(modifier: Modifier = Modifier) {
         )
         Switch(checked = isAppDarkTheme(),
             onCheckedChange = {
-                if (theme.value == Theme.Light.name) {
-                    scope.launch {
-                        dataStore.saveTheme(Theme.Dark.name)
-                    }
-                    theme.value = Theme.Dark.name
-                } else {
-                    scope.launch {
-                        dataStore.saveTheme(Theme.Light.name)
-                    }
-                    theme.value = Theme.Light.name
+                val newTheme = if (it) Theme.Dark else Theme.Light
+                scope.launch {
+                    dataStore.saveTheme(newTheme.name)
                 }
             })
 
