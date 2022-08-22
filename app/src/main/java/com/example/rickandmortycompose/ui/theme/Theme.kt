@@ -5,17 +5,23 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import com.example.rickandmortycompose.data.datastore.StoreTheme
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = CardBackground,
+    primaryVariant = MainBackground,
+    secondary = White,
+    background = Black,
+    surface = CardBackground
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = White,
+    primaryVariant = CardBackground,
+    surface = CardBackground
 
     /* Other default colors to override
     background = Color.White,
@@ -29,7 +35,7 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun RickAndMortyComposeTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = isAppDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {
@@ -44,4 +50,21 @@ fun RickAndMortyComposeTheme(
         shapes = Shapes,
         content = content
     )
+}
+
+@Composable
+fun isAppDarkTheme(): Boolean {
+    val dataStore = StoreTheme(LocalContext.current)
+    val theme by dataStore.getTheme.collectAsState("")
+    return when (theme) {
+        Theme.Light.name -> false
+        Theme.Dark.name -> true
+        else -> isSystemInDarkTheme()
+
+    }
+}
+
+enum class Theme {
+    Light,
+    Dark
 }
