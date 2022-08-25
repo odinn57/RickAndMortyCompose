@@ -39,4 +39,24 @@ data class Result(
                 created = ""
             ) {
     }
+
+    companion object {
+        fun Result.toSingleCharacters(): SingleCharacter {
+            return SingleCharacter(
+                created = created,
+                episode = episode,
+                gender = gender,
+                id = id,
+                image = image,
+                location = location ?: Location(),
+                name = name,
+                origin = origin ?: Origin(),
+                species = species,
+                status = status,
+                type = type,
+                url = url
+            )
+        }
+
+    }
 }
