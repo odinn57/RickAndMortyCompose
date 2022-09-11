@@ -23,7 +23,7 @@ fun CharactersList(
                 CharacterItem(
                     modifier = Modifier.clickable { onCardClick(character) },
                     person = character,
-                    onClickFavorite = { onFavoriteClick(character) }
+                    onClickFavorite = { onFavoriteClick(it) }
                 )
             }
         }

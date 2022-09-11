@@ -30,7 +30,7 @@ fun CharacterDetailScreen(
     onFavoriteClick: (person: SingleCharacter) -> Unit = {}
 ) {
     Scaffold(backgroundColor = CardBackground) { padding ->
-        Column(modifier = modifier.padding()) {
+        Column(modifier = modifier.padding(padding)) {
             if (person != null) {
                 CharacterDetail(person = person,
                     onClickFavorite = { onFavoriteClick(person) }

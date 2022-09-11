@@ -41,7 +41,7 @@ data class Result(
     }
 
     companion object {
-        fun Result.toSingleCharacters(): SingleCharacter {
+        fun Result.toSingleCharacters(isFavorite: Boolean = false): SingleCharacter {
             return SingleCharacter(
                 created = created,
                 episode = episode,
@@ -54,7 +54,8 @@ data class Result(
                 species = species,
                 status = status,
                 type = type,
-                url = url
+                url = url,
+                isFavorite = isFavorite
             )
         }
 

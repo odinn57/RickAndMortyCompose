@@ -8,7 +8,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -22,7 +22,7 @@ import com.example.rickandmortycompose.ui.components.navigation.navigate
 @Composable
 fun CharactersScreen(
     navController: NavController,
-    charactersViewModel: CharactersViewModel = viewModel()
+    charactersViewModel: CharactersViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
     Surface {
@@ -45,7 +45,13 @@ fun CharactersScreen(
                             NavigationKeys.CHARACTER_DETAIL_KEY to it
                         )
                     },
-                    onFavoriteClick = {}
+                    onFavoriteClick = {
+                        if (it.isFavorite)
+                            charactersViewModel.addFavorite(it)
+                        else
+                            charactersViewModel.deleteFavorite(it)
+
+                    }
                 )
             }
         }
