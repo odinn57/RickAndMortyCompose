@@ -1,4 +1,4 @@
-package com.example.rickandmortycompose.ui.components
+package com.example.rickandmortycompose.ui.components.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

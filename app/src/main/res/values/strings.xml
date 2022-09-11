@@ -4,7 +4,8 @@
     <string name="person_photo_text">person_photo</string>
     <string name="person_status_text">person_status</string>
     <string name="person_last_known_location_text">Последнее известное местоположение:</string>
-    <string name="person_first_seen_in_text">Впервые встречается в:</string>
+    <string name="person_first_seen_in_text">Впервые встречается в эпизоде:</string>
+    <string name="person_list_of_episodes_text">Список эпизодов с участием:</string>
     <string name="person_add_to_favorite_cd">Добавить в избранное</string>
     <string name="change_app_theme">Изменить тему приложения</string>
     <string name="person_menu_cd">Меню</string>
@@ -18,4 +19,5 @@
     <string name="episodes_catalog_menu">Эпизоды</string>
     <string name="copyright_text">Copyright \u00a9 2022, odinn57</string>
     <string name="navigation_text">Навигация: </string>
+    <string name="something_wrong">Упс… Что-то пошло не так(</string>
 </resources>

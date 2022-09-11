@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import com.example.rickandmortycompose.R
 import com.example.rickandmortycompose.ui.components.H2Text
 import com.example.rickandmortycompose.ui.components.Subtitle1Text
-import com.example.rickandmortycompose.ui.components.SwitchThemeItem
 import com.example.rickandmortycompose.ui.theme.Black
 import com.example.rickandmortycompose.ui.theme.CardBackground
 import com.example.rickandmortycompose.ui.theme.White

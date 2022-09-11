@@ -1,4 +1,4 @@
-package com.example.rickandmortycompose
+package com.example.rickandmortycompose.ui.components.navigation
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -39,4 +39,4 @@ fun NavController.navigate(
 }
 
 fun <T : Parcelable?> NavController.getArgument(key: String): T? =
-    this.currentBackStackEntry?.arguments?.getParcelable<T>(key)
+    this.previousBackStackEntry?.arguments?.getParcelable<T>(key)
