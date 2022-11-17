@@ -11,9 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -40,8 +39,8 @@ fun CharacterItem(
     modifier: Modifier = Modifier,
     onClickFavorite: (person: SingleCharacter) -> Unit = {}
 ) {
-    val personState by remember { mutableStateOf(person) }
-    val isPersonFavorite = remember { mutableStateOf(false) }
+    val personState = rememberSaveable { mutableStateOf(person) }
+    val isPersonFavorite = rememberSaveable { mutableStateOf(person.isFavorite) }
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -65,77 +64,107 @@ fun CharacterItem(
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    H2Text(
-                        modifier = Modifier.weight(0.8f),
-                        text = personState.name
-                    )
-                    IconToggleButton(
-                        checked = isPersonFavorite.value,
-                        onCheckedChange = {
-                            isPersonFavorite.value = it
-                            onClickFavorite(person)
-                        },
-                        modifier = Modifier
-                            .weight(0.2f)
-                    ) {
-                        Icon(
-                            modifier = Modifier
-                                .size(24.dp),
-                            imageVector = if (isPersonFavorite.value) Icons.Filled.Favorite else Icons.Outlined.Favorite,
-                            contentDescription = stringResource(R.string.person_add_to_favorite_cd),
-                            tint = if (isPersonFavorite.value) Color.Red else Color.White
-                        )
+                CharacterNameAndIsFavorite(
+                    modifier = Modifier.fillMaxWidth(),
+                    person = person,
+                    isPersonFavorite = isPersonFavorite.value,
+                    onClickFavoriteBtn = {
+                        personState.value = personState.value.copy(isFavorite = it)
+                        isPersonFavorite.value = it
+                        onClickFavorite(personState.value)
                     }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (personState.status == "Alive") {
-                        Image(
-                            modifier = Modifier.size(12.dp),
-                            painter = painterResource(id = R.drawable.ic_circle_green),
-                            contentDescription = stringResource(
-                                id = R.string.person_status_text
-                            )
-                        )
-                    } else {
-                        Image(
-                            modifier = Modifier.size(12.dp),
-                            painter = painterResource(id = R.drawable.ic_circle_red),
-                            contentDescription = stringResource(
-                                id = R.string.person_status_text
-                            )
-                        )
-                    }
-                    NormalText(text = "${personState.status} - ${personState.species}")
-                }
-                Row(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .fillMaxWidth(),
-                ) {
-                    Subtitle1Text(
-                        text = stringResource(id = R.string.person_last_known_location_text),
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                ) {
-                    Text(text = personState.location.name)
-                }
-            }
+                )
+                CharacterStatusAndGender(
+                    person = person, modifier = Modifier
+                        .fillMaxWidth()
+                )
+                CharacterLastKnowLocation(
+                    person = person,
+                    modifier = Modifier.fillMaxWidth()
+                )
 
+            }
         }
+    }
+}
+
+@Composable
+fun CharacterNameAndIsFavorite(
+    modifier: Modifier = Modifier,
+    person: SingleCharacter,
+    isPersonFavorite: Boolean = false,
+    onClickFavoriteBtn: (isPersonFavorite: Boolean) -> Unit = {}
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        H2Text(
+            modifier = Modifier.weight(0.8f),
+            text = person.name
+        )
+        IconToggleButton(
+            checked = isPersonFavorite,
+            onCheckedChange = {
+                onClickFavoriteBtn(it)
+            },
+            modifier = Modifier
+                .weight(0.2f)
+        ) {
+            Icon(
+                modifier = Modifier
+                    .size(24.dp),
+                imageVector = if (isPersonFavorite) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+                contentDescription = stringResource(R.string.person_add_to_favorite_cd),
+                tint = if (isPersonFavorite) Color.Red else Color.White
+            )
+        }
+    }
+}
+
+@Composable
+fun CharacterStatusAndGender(modifier: Modifier = Modifier, person: SingleCharacter) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (person.status == "Alive") {
+            Image(
+                modifier = Modifier.size(12.dp),
+                painter = painterResource(id = R.drawable.ic_circle_green),
+                contentDescription = stringResource(
+                    id = R.string.person_status_text
+                )
+            )
+        } else {
+            Image(
+                modifier = Modifier.size(12.dp),
+                painter = painterResource(id = R.drawable.ic_circle_red),
+                contentDescription = stringResource(
+                    id = R.string.person_status_text
+                )
+            )
+        }
+        NormalText(text = "${person.status} - ${person.species}")
+    }
+}
+
+@Composable
+fun CharacterLastKnowLocation(modifier: Modifier = Modifier, person: SingleCharacter) {
+    Row(
+        modifier = modifier
+            .padding(top = 8.dp)
+    ) {
+        Subtitle1Text(
+            text = stringResource(id = R.string.person_last_known_location_text),
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+    Row(
+        modifier = modifier,
+    ) {
+        Text(text = person.location.name)
     }
 }
 

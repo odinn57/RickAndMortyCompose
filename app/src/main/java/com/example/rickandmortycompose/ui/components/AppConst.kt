@@ -13,3 +13,9 @@ object Service {
     const val GET_CHARACTER = "character"
     const val GET_EPISODE = "episode"
 }
+
+object DatabaseKeys {
+    const val DATABASE_VERSION = 2
+    const val DATABASE_NAME = "rick_and_morty_db"
+    const val CHARACTERS_TABLE = "characters"
+}

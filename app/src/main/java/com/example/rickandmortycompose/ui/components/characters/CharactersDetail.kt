@@ -11,7 +11,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,8 +37,8 @@ fun CharacterDetail(
     person: SingleCharacter,
     onClickFavorite: (person: SingleCharacter) -> Unit = {}
 ) {
-    val isPersonFavorite = remember {
-        mutableStateOf(false)
+    val isPersonFavorite = rememberSaveable {
+        mutableStateOf(person.isFavorite)
     }
     Column(
         modifier = modifier
