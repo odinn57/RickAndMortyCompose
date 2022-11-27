@@ -1,3 +1,4 @@
 # RickAndMortyCompose
 RickAndMorty App Jetpack + Compose
-https://rickandmortyapi.com/
+
+API: https://rickandmortyapi.com/ 
